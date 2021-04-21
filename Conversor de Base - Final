@@ -1,0 +1,110 @@
+#include <iostream>
+#include <locale.h>
+
+using namespace std;
+
+int main()
+{
+    //Caracter UTF-8
+    setlocale(LC_ALL,"");
+
+    //Variáveis
+    long long int numero;
+    char repetir = 's';
+    int escolha=0, digito=0, posicao=0, resultado=0, aux=0, contador=0;
+    int vetor[] = {1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192};
+    int binario[19];
+
+    do{
+    //Pergunta que tipo de operação vai realizar
+    cout << "-----------------------------------------\n" <<
+            "|| ESCOLHA UMA DAS OPÇÕES DE CONVERSÃO ||\n" <<
+            "-----------------------------------------\n" <<
+            "1 - Decimal para Binário\n" <<
+            "2 - Binário para Decimal\nOpção: ";
+    cin >> escolha;
+
+        //Verifica se a escolha é realmente 1 ou 2, se não repete
+        if(escolha > 2 || escolha < 1){
+            do{
+                system("cls");
+                cout << "Ops! A opção "<< escolha <<" não existe... Tente novamente\n" <<
+                        "\n1 - Decimal para Binário\n" <<
+                        "2 - Binário para Decimal\nOpção: ";
+                cin >> escolha;
+            }while(escolha > 2 || escolha < 1);
+        }
+
+        //Verifica qual operação foi escolhida
+
+    //Logica: Decimal -> Binario
+    if (escolha == 1){
+        cout << "\nDigite um número (base decimal): \nDecimal: ";
+        cin >> numero;
+        cout << "\nO número "<< numero <<" em binário é:\n";
+
+        for (aux = 19; aux >= 0; aux--) {
+            //Divide o número, caso o resto for 0 a posição x do bin[] recebe 0
+            if (numero % 2 == 0) {
+                binario[aux] = 0;
+                numero = numero / 2;
+            //Caso contrário a posição x do bin[] recebe 1
+            } else {
+                binario[aux] = 1;
+                numero = numero / 2;
+            }
+        }
+
+        //Imprime no console o resultado
+        for (aux = 0; aux <= 19; aux++) {
+            cout << ("%d", binario[aux]);
+
+            //Conta quantos numeros foram impressos, quando chegar em 4 ele da um espaço
+            contador += 1;
+            if(contador == 4){
+                cout << " ";
+                contador = 0;
+            }
+        }
+            cout << "\n";
+
+        //Lógica: Binario -> Decimal
+        } else if (escolha == 2) {
+        cout << "\nDigite um número binário:\n";
+        cin >> numero;
+        cout << "\nO número "<< numero <<" em decimal é:\n";
+
+        //Zera o valor de variaveis após finalizar conversão
+        posicao = 0;
+        resultado = 0;
+        digito = 0;
+
+        //Enquanto o numero for maior que 0 o loop continua
+        while(numero > 0){
+            //Divide numero por 10, o resto vai para digito
+            digito = numero % 10;
+            //Se o digito for igual a 1 ele soma a posição do vetor ao resultado
+            if(digito == 1){
+                resultado = resultado + vetor[posicao];
+            }
+            //Adiciona 1 a posição e divide o numero e atribui a ele mesmo
+            posicao++;
+            numero = numero/10;
+        }
+        //Imprime no console o resultado
+        cout << resultado << "\n";
+        }
+
+        //Verifica se o usuário quer repetir a conversão
+        cout << "\nDeseja fazer outra conversão? (S/N)\n";
+        cin >> repetir;
+        system("cls");
+
+    }while(repetir == 's' || repetir == 'S');
+
+    cout << "---------------------------------------\n" <<
+            "|| OBRIGADO POR USAR NOSSO CONVERSOR ||\n" <<
+            "---------------------------------------\n";
+
+    return 0;
+}

@@ -1,0 +1,83 @@
+#include <iostream> //Serve para usar recursos de entrada e saída
+#include <locale.h> //Permite utilizar a funçãor setlocale() para usar caracter especial
+
+using namespace std; //Este comando serve para definir um "espaço de nomes"
+
+int main()
+{
+    //Caracter UTF-8 (para exibir acentos e caracteres como ç)
+    setlocale(LC_ALL,"");
+
+    //Variáveis
+    int numero;
+    char repetir;
+    int escolha=0, aux=0, contador=0;
+    int binario[19];
+
+    do{
+    //Pergunta que tipo de operação vai realizar
+    cout << "-----------------------------------------\n" <<
+            "|| ESCOLHA UMA OPÇÃO DE CONVERSÃO ||\n" <<
+            "-----------------------------------------\n" <<
+            "1 - Decimal para Binário\n";
+    cin >> escolha;
+
+        //Verifica se a escolha é realmente 1, se não for ele repete até que digite 1
+        if(escolha != 1){
+            do{
+                escolha = 0;
+                system("cls");
+                cout << "Ops! A opção "<< escolha <<" não existe... Tente novamente\n" <<
+                        "\n1 - Decimal para Binário\n";
+                cin >> escolha;
+            }while(escolha == '1');
+        }
+
+        //Verifica qual operação foi escolhida
+
+    //Logica: Decimal -> Binario
+    if (escolha == 1){
+        //Pede para digitar um número
+        cout << "\nDigite um número (base decimal): \nDecimal: ";
+        cin >> numero;
+        cout << "\nO número "<< numero <<" em binário é:\n";
+
+        for (aux = 19; aux >= 0; aux--) {
+            //Divide o número, caso o resto for 0 a posição x do bin[] recebe 0
+            if (numero % 2 == 0) {
+                binario[aux] = 0;
+                numero = numero / 2;
+            //Caso contrário a posição x do bin[] recebe 1
+            } else {
+                binario[aux] = 1;
+                numero = numero / 2;
+            }
+        }
+
+            //Imprime no console o resultado
+        for (aux = 0; aux <= 19; aux++) {
+            cout << ("%d", binario[aux]);
+
+            //Conta quantos numeros foram impressos, quando chegar em 4 ele da um espaço
+            contador += 1;
+            if(contador == 4){
+                cout << " ";
+                contador = 0;
+            }
+            }
+        }
+
+        //Verifica se o usuário quer repetir a conversão
+        cout << "\nDeseja fazer outra conversão? (S/N)\n";
+        cin >> repetir;
+        system("cls");
+
+    }while(repetir == 's' || repetir == 'S');
+
+    //Caso não queira a mensagem de agradecimento aparece
+    cout << "---------------------------------------\n" <<
+            "|| OBRIGADO POR USAR NOSSO CONVERSOR ||\n" <<
+            "---------------------------------------\n";
+
+    return 0;
+}
